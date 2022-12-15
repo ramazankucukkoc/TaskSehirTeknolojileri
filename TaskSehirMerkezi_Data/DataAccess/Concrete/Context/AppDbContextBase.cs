@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TaskSehirTeknolojileri_Data.Entities.Concrete;
 
 namespace TaskSehirTeknolojileri_Data.DataAccess.Concrete.Context
 {
-    public class AppDbContextBase : IdentityDbContext<User, IdentityRole, string>
+    public class AppDbContextBase :DbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
-
-        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public AppDbContextBase()
         {
 

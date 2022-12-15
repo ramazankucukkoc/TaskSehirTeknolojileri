@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
+using TaskSehirTeknolojileri_WEBAPI.Controllers;
 
 namespace TaskSehirMerkezi_WEBAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : BaseApiController
     {
         private readonly ICategoryService _categoryService;
 
@@ -15,7 +13,7 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddAsync(CategoryDto categoryDto)
         {
             var categoryDtoAdd = await _categoryService.AddAsync(categoryDto);

@@ -22,139 +22,6 @@ namespace TaskSehirTeknolojileri_Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
             modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -188,28 +55,28 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4289),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1012),
                             Description = "Sıfır Telefonlar",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4287),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1009),
                             Name = "Telefon"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4292),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1014),
                             Description = "Beyaz Eşya",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4291),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1013),
                             Name = "Beyaz Eşya"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4294),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1016),
                             Description = "Laptoplar",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(4293),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1015),
                             Name = "Bilgisayar"
                         });
                 });
@@ -224,13 +91,13 @@ namespace TaskSehirTeknolojileri_Data.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -240,21 +107,21 @@ namespace TaskSehirTeknolojileri_Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -274,12 +141,12 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                             Id = 1,
                             Address = "Fetih Mah. Aşık Nigari Sok. NO:2AB",
                             City = "Konya",
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(5372),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1993),
                             Email = "ramazankucukkoc43@gmail.com",
                             FirstName = "Ramazan",
                             IsDeleted = false,
                             LastName = "Küçükkoç",
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(5374),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1995),
                             PhoneNumber = "5436251369"
                         },
                         new
@@ -287,14 +154,31 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                             Id = 2,
                             Address = "Sincan Mah. Aşık Nigari Sok. NO:2AB",
                             City = "Ankara",
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(5376),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1998),
                             Email = "alistfn06@gmail.com",
                             FirstName = "Aliş",
                             IsDeleted = false,
                             LastName = "Tufan",
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(5377),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(1999),
                             PhoneNumber = "5427123456"
                         });
+                });
+
+            modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.OperationClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OperationClaims");
                 });
 
             modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.Product", b =>
@@ -348,10 +232,10 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                             Id = 1,
                             Brand = "Samsung",
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7556),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3599),
                             Description = "Samsung Ürünü Güzel",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7552),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3595),
                             Name = "Galaxy M-20",
                             Stock = (short)22,
                             UnitPrice = 22m
@@ -361,10 +245,10 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                             Id = 2,
                             Brand = "Arçelik",
                             CategoryId = 2,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7558),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3606),
                             Description = "Arçelik Ürün Şahane",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7557),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3604),
                             Name = "Buzdolabı",
                             Stock = (short)12,
                             UnitPrice = 20m
@@ -374,10 +258,10 @@ namespace TaskSehirTeknolojileri_Data.Migrations
                             Id = 3,
                             Brand = "Huawei",
                             CategoryId = 3,
-                            CreatedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7561),
+                            CreatedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3608),
                             Description = "Huawei Ürün artıları fazla",
                             IsDeleted = false,
-                            ModifiedDate = new DateTime(2022, 12, 9, 18, 25, 6, 350, DateTimeKind.Local).AddTicks(7560),
+                            ModifiedDate = new DateTime(2022, 12, 14, 12, 5, 11, 300, DateTimeKind.Local).AddTicks(3607),
                             Name = "Huawei Matebook m20",
                             Stock = (short)13,
                             UnitPrice = 12m
@@ -386,136 +270,57 @@ namespace TaskSehirTeknolojileri_Data.Migrations
 
             modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
+                    b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.UserRefreshToken", b =>
+            modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.UserOperationClaim", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Expriration")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("OperationClaimId")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.ToTable("UserRefreshTokens");
-                });
+                    b.HasKey("Id");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("TaskSehirTeknolojileri_Data.Entities.Concrete.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("TaskSehirTeknolojileri_Data.Entities.Concrete.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskSehirTeknolojileri_Data.Entities.Concrete.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("TaskSehirTeknolojileri_Data.Entities.Concrete.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("UserOperationClaims");
                 });
 
             modelBuilder.Entity("TaskSehirTeknolojileri_Data.Entities.Concrete.Product", b =>

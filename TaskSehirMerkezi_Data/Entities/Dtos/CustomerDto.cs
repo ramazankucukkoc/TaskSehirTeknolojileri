@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskSehirTeknolojileri_Core.Entities;
-
-namespace TaskSehirTeknolojileri_Data.Entities.Dtos
+﻿namespace TaskSehirTeknolojileri_Data.Entities.Dtos
 {
-    public class CustomerDto:EntityBaseDto
+    public class CustomerDto : EntityBaseDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

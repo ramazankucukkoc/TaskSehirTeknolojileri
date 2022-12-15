@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
+using TaskSehirTeknolojileri_WEBAPI.Controllers;
 
 namespace TaskSehirMerkezi_WEBAPI.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         private readonly IProductService _productService;
 
@@ -17,17 +14,17 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
         {
             _productService = productService;
         }
-        [HttpPost("add")]
-        public async Task<IActionResult>AddAsync(ProductDto productDto)
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(ProductDto productDto)
         {
             var productDtoAdd = await _productService.AddAsync(productDto);
-            if (productDtoAdd.ResultStatus ==0)
+            if (productDtoAdd.ResultStatus == 0)
             {
                 return Ok(productDtoAdd);
             }
             return BadRequest(productDtoAdd.Message);
         }
-        [HttpPost("delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteAsync(ProductDto productDto)
         {
             var productDtoDelete = await _productService.DeleteAsync(productDto);
@@ -37,7 +34,8 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
             }
             return BadRequest(productDtoDelete.Message);
         }
-        [HttpPost("update")]
+
+        [HttpPost]
         public async Task<IActionResult> UpdateAsync(ProductDto productDto)
         {
             var productDtoUpdate = await _productService.UpdateAsync(productDto);
@@ -47,7 +45,7 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
             }
             return BadRequest(productDtoUpdate.Message);
         }
-        [HttpGet("productwithcategorylist")]
+        [HttpGet]
         public async Task<IActionResult> GetProductWithCategoryList()
         {
             var productDtoList = await _productService.GetProductsWithCategory();

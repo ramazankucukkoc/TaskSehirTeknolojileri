@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Data;
 using TaskSehirTeknolojileri_Core.Utilities.Results;
 using TaskSehirTeknolojileri_Data.DataAccess.Abstract;
 using TaskSehirTeknolojileri_Data.Entities.Concrete;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
+using TaskSehirTeknolojileri_Service.BusinessAspect;
 using TaskSehirTeknolojileri_Service.Mappings.AutoMapper;
 using TaskSehirTeknolojileri_Service.Utilities;
 
 namespace TaskSehirTeknolojileri_Service.Concrete
 {
+
     public class CustomerManager : ICustomerService
     {
+
         private readonly ICustomerDal _customerDal;
 
         public CustomerManager(ICustomerDal customerDal)
@@ -29,7 +29,7 @@ namespace TaskSehirTeknolojileri_Service.Concrete
             {
                 customer.CreatedDate = DateTime.Now;
                 await _customerDal.AddAsync(customer);
-                return new DataResult<CustomerDto>(ResultStatus.Success, Messages.Customer.Add(customer.FirstName +" "+customer.LastName), entity);
+                return new DataResult<CustomerDto>(ResultStatus.Success, Messages.Customer.Add(customer.FirstName + " " + customer.LastName), entity);
             }
             return new DataResult<CustomerDto>(ResultStatus.Error, Messages.Customer.NotAdd(customer.FirstName + " " + customer.LastName), null);
         }
@@ -54,9 +54,10 @@ namespace TaskSehirTeknolojileri_Service.Concrete
                 await _customerDal.UpdateAsync(customer);
                 return new DataResult<CustomerDto>(ResultStatus.Success, Messages.Customer.Delete(customer.FirstName + " " + customer.LastName), entity);
             }
-            return new DataResult<CustomerDto>(ResultStatus.Error, Messages.Customer.NonDelete(customer.FirstName +" "+customer.LastName), null);
+            return new DataResult<CustomerDto>(ResultStatus.Error, Messages.Customer.NonDelete(customer.FirstName + " " + customer.LastName), null);
         }
-
+        [SecuredOperation("Editor")]
+        //[CacheAspect(duration: 20)]
         public async Task<IDataResult<List<CustomerDto>>> GetAllNonDeletedAsync()
         {
             var getallCustomer = await _customerDal.GetAllAsync(p => !p.IsDeleted);
@@ -73,10 +74,10 @@ namespace TaskSehirTeknolojileri_Service.Concrete
             var oldCustomer = await _customerDal.GetAsync(p => p.Id == entity.Id);
             if (entity != null)
             {
-                var customer = ObjectMapper.Mapper.Map<CustomerDto , Customer>(entity, oldCustomer);
+                var customer = ObjectMapper.Mapper.Map<CustomerDto, Customer>(entity, oldCustomer);
                 customer.ModifiedDate = DateTime.Now;
                 await _customerDal.UpdateAsync(customer);
-                return new DataResult<CustomerDto>(ResultStatus.Success, Messages.Customer.Update(oldCustomer.FirstName +" "+oldCustomer.LastName), entity);
+                return new DataResult<CustomerDto>(ResultStatus.Success, Messages.Customer.Update(oldCustomer.FirstName + " " + oldCustomer.LastName), entity);
             }
             return new DataResult<CustomerDto>(ResultStatus.Error, Messages.Customer.Update(oldCustomer.FirstName + " " + oldCustomer.LastName), entity);
         }

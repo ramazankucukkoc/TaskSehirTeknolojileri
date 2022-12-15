@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
-
+using TaskSehirTeknolojileri_WEBAPI.Controllers;
 
 namespace TaskSehirMerkezi_WEBAPI.Controllers
 {
-    [Authorize(Roles = "Editor")]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CustomerController : ControllerBase
+
+    public class CustomerController : BaseApiController
     {
         private readonly ICustomerService _customerService;
 
@@ -18,8 +15,8 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
         {
             _customerService = customerService;
         }
-        [HttpPost("add")]
-        public async Task<IActionResult> AddAsync(CustomerDto customerDto )
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(CustomerDto customerDto)
         {
             var customerDtoAdd = await _customerService.AddAsync(customerDto);
             if (customerDtoAdd.ResultStatus == 0)
@@ -28,7 +25,7 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
             }
             return BadRequest(customerDtoAdd.Message);
         }
-        [HttpPost("delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteAsync(CustomerDto customerDto)
         {
             var customerDtoAdd = await _customerService.DeleteAsync(customerDto);
@@ -48,7 +45,8 @@ namespace TaskSehirMerkezi_WEBAPI.Controllers
             }
             return BadRequest(customerDtoAdd.Message);
         }
-        [HttpGet("customerlist")]
+
+        [HttpGet]
         public async Task<IActionResult> GetCustomerList()
         {
             var customerDtoList = await _customerService.GetAllNonDeletedAsync();

@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskSehirTeknolojileri_Core.Utilities.Results;
+using TaskSehirTeknolojileri_Data.DataAccess.Abstract;
 using TaskSehirTeknolojileri_Data.Entities.Concrete;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
@@ -14,35 +10,29 @@ namespace TaskSehirTeknolojileri_Service.Concrete
 {
     public class UserManager : IUserService
     {
-        private readonly UserManager<User> _userManager;
+        private readonly IUserDal _userDal;
 
-        public UserManager(UserManager<User> userManager)
+        public UserManager(IUserDal userDal)
         {
-            _userManager = userManager;
+            _userDal = userDal;
         }
 
-        public async Task<IDataResult<UserAppDto>> CreateUserAsync(CreateUserDto createUserDto)
+        public async Task AddAsync(User user)
         {
-            var user = new User { Email = createUserDto.Email, UserName = createUserDto.UserName };
-
-            var result = await _userManager.CreateAsync(user, createUserDto.Password);
-
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(x => x.Description).ToList();
-                return new DataResult<UserAppDto>(ResultStatus.Error, $"{errors}", null);
-            }
-            return new DataResult<UserAppDto>(ResultStatus.Success, ObjectMapper.Mapper.Map<UserAppDto>(user));
-
+            await _userDal.AddAsync(user);
         }
-        public async Task<IDataResult<UserAppDto>> GetUserAsync(string userName)
+
+        public async Task<IDataResult<User>> GetByEmail(string email)
         {
-            var user = await _userManager.FindByNameAsync(userName);
-            if (user ==null)
-            {
-                return new DataResult<UserAppDto>(ResultStatus.Error, "User not found", null);
-            }
-            return new DataResult<UserAppDto>(ResultStatus.Success, ObjectMapper.Mapper.Map<UserAppDto>(user));
+            var user = await _userDal.GetAsync(x => x.Email == email);
+            return new DataResult<User>(ResultStatus.Success, user);
         }
+
+        public async Task<IDataResult<List<OperationClaim>>> GetOperationClaims(User user)
+        {
+            var roles = await _userDal.GetClaims(user);
+            return new DataResult<List<OperationClaim>>(ResultStatus.Success, roles);
+        }
+        
     }
 }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TaskSehirTeknolojileri_Core.Utilities.Results;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 
 namespace TaskSehirTeknolojileri_Service.Abstract
 {
-    public interface ICategoryService:IGenericService<CategoryDto>
+    public interface ICategoryService
     {
-        //Task<IDataResult<List<CustomerDto>>> GetAllNonDeleted();
-        //Task<IDataResult<CustomerDto>> DeleteAsync(int id);
-        //Task<IDataResult<int>> CountAsync();
-        //Task<IDataResult<CustomerDto>> AddAsync(CustomerDto entity);
-        //Task<IDataResult<CustomerDto>> UpdateAsync(CustomerDto entity);
+        Task<IDataResult<List<CategoryDto>>> GetAllNonDeletedAsync();
+        Task<IDataResult<CategoryDto>> DeleteAsync(CategoryDto entity);
+        Task<IDataResult<int>> CountAsync();
+        Task<IDataResult<CategoryDto>> AddAsync(CategoryDto entity);
+        Task<IDataResult<CategoryDto>> UpdateAsync(CategoryDto entity);
     }
 }

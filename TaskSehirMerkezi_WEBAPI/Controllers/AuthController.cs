@@ -1,34 +1,51 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaskSehirTeknolojileri_Data.Entities.Dtos;
 using TaskSehirTeknolojileri_Service.Abstract;
 
 namespace TaskSehirTeknolojileri_WEBAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseApiController
     {
-        private readonly IAuthenticetionService _authenticationService;
+        private readonly IAuthService _authenticationService;
 
-        public AuthController(IAuthenticetionService authenticationService)
+        public AuthController(IAuthService authenticationService)
         {
             _authenticationService = authenticationService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTokenAsync(LoginDto loginDto)
+        public async Task<IActionResult> LoginAsync(UserLoginDto loginDto)
         {
-            var result = await _authenticationService.CreateTokenAsync(loginDto);
-            return Ok(result);
+            var userToLogin = await _authenticationService.LoginAsync(loginDto);
+            if (userToLogin.ResultStatus!=0)
+            {
+                return BadRequest(userToLogin.Message);
+            }
+            var result =await _authenticationService.CreateAccessTokenAsync(userToLogin.Data);
+            if (result.ResultStatus==0)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);   
         }
-        
         [HttpPost]
-        public async Task<IActionResult> CreateTokenByRefreshTokenAsync(RefreshTokenDto refreshTokenDto)
+        public async Task<IActionResult> RegisterAsync(UserRegisterDto registerDto)
         {
-            var result = await _authenticationService.CreateTokenByRefreshTokenAsync(refreshTokenDto.RefreshToken);
-            return Ok(result);
+            var userExists = await _authenticationService.UserExists(registerDto.Email);
+            if (userExists.ResultStatus ==0)
+            {
+                return BadRequest(userExists.Message);
+            }
+            var registerResult = await _authenticationService.RegisterAsync(registerDto,registerDto.Password);
+            var result = await _authenticationService.CreateAccessTokenAsync(registerResult.Data);
+            if (result.ResultStatus == 0)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
         }
+
+
 
     }
 }

@@ -2,17 +2,21 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLayer_Backend_Core.Utilities.Security.Encyption;
+using NLayer_Backend_Core.Utilities.Security.Jwt;
+using TaskSehirTeknolojileri_Core.DependencyResolvers;
+using TaskSehirTeknolojileri_Core.Extensions;
+using TaskSehirTeknolojileri_Core.Utilities.IoC;
 using TaskSehirTeknolojileri_Core.Utilities.Jwt;
 using TaskSehirTeknolojileri_Data.DataAccess.Concrete.Context;
-using TaskSehirTeknolojileri_Data.DataAccess.Configuration;
 using TaskSehirTeknolojileri_Data.Entities.Concrete;
 using TaskSehirTeknolojileri_Service.DependencyResolvers.Autofac;
-using TokenOptions = TaskSehirTeknolojileri_Data.DataAccess.Configuration.CustomTokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddDbContext<AppDbContextBase>(options =>
 {
@@ -21,33 +25,35 @@ builder.Services.AddDbContext<AppDbContextBase>(options =>
         sqlOptions.MigrationsAssembly("TaskSehirTeknolojileri_Data");
     });
 });
-builder.Services.AddIdentity<User, IdentityRole>(opt =>
-{
-    opt.User.RequireUniqueEmail = true;
-    opt.Password.RequireNonAlphanumeric = false;
-}).AddEntityFrameworkStores<AppDbContextBase>().AddDefaultTokenProviders();
 
-builder.Services.Configure<CustomTokenOptions>(builder.Configuration.GetSection("TokenOption"));
 
-builder.Services.AddAuthentication(options =>
-{
 
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opts =>
-{
-    var tokenOptions = builder.Configuration.GetSection("TokenOption").Get<CustomTokenOptions>();
-    opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+var tokenOptions =builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidIssuer = tokenOptions.Issuer,
-        ValidAudience = tokenOptions.Audience[0],
-        IssuerSigningKey = SignService.GetSymmetricSecurityKey(tokenOptions.SecurityKey),
-        ValidateIssuerSigningKey = true,
-        ValidateAudience = true,
-        ValidateIssuer = true,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
-    };
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = tokenOptions.Issuer,
+            ValidAudience = tokenOptions.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+        };
+    });
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("http://localhost:4200"));
+});
+
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
 });
 builder.Services.AddSwaggerGen(swagger =>
 {
@@ -84,13 +90,8 @@ builder.Services.AddSwaggerGen(swagger =>
                     }
                 });
 });
-
-
-
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new AutofacBusinessModule()));
-
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -107,9 +108,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();

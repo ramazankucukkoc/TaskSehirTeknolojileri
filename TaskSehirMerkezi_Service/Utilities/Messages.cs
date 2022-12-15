@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaskSehirTeknolojileri_Service.Utilities
+﻿namespace TaskSehirTeknolojileri_Service.Utilities
 {
     public static class Messages
     {
+        public static string AuthorizationDenied = "Yetkiniz yok";
+
         public static class Customer
         {
             public static string Count(int count)

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaskSehirTeknolojileri_Data.Entities.Dtos
+﻿namespace TaskSehirTeknolojileri_Data.Entities.Dtos
 {
     public class UserRoleDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

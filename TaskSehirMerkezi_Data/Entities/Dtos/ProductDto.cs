@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskSehirTeknolojileri_Core.Entities;
-
-namespace TaskSehirTeknolojileri_Data.Entities.Dtos
+﻿namespace TaskSehirTeknolojileri_Data.Entities.Dtos
 {
-    public class ProductDto:EntityBaseDto
+    public class ProductDto : EntityBaseDto
     {
         public string Name { get; set; }
         public string Brand { get; set; }
